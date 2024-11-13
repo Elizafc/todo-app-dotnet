@@ -1,0 +1,26 @@
+@model IEnumerable<TodoApp.Models.TodoItem>
+
+<h1>Lista de Tarefas</h1>
+<form asp-action="Add" method="post">
+    <input type="text" name="Title" placeholder="Nova Tarefa" required />
+    <button type="submit">Adicionar</button>
+</form>
+
+<ul>
+    @foreach (var item in Model)
+    {
+        <li>
+            <form asp-action="ToggleComplete" method="post" style="display: inline;">
+                <input type="hidden" name="id" value="@item.Id" />
+                <button type="submit">@item.IsCompleted ? "S" : "N"</button>
+            </form>
+            <span style="text-decoration:@(item.IsCompleted ? "line-trough" : "none");">
+                @item.Title
+            </span>
+            <form asp-action="Delete" method="post" style="display: inline;">
+                <input type="hidden" name="id" value="@item.Id" />
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+    }
+</ul>
